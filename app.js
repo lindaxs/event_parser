@@ -16,12 +16,27 @@ function loadItemProps(item) {
   // Get the table body element
   var tbody = $('.prop-table');
   var body = item.body;
+  var pyScript = './script.py';
+  
+  var PythonShell = require('python-shell');
+  var pyshell = new PythonShell(pyScript);
+  
+  pyshell.on('message', function (message) {
+      console.log(message);
+  });
+  
+  pyshell.end(function (err) {
+    if(err){
+      throw err;
+    };  
+    console.log("finished");
+  }
   
   body.getAsync(Office.CoercionType.Text, function (asyncResult) {
     if (asyncResult.status !== Office.AsyncResultStatus.Succeeded){
-        tbody.append(makeTableRow("XXX: ", "BAD"));
+      console.log("Error, failed to fetch!")
     } else {
-      tbody.append(makeTableRow("XXX: ", asyncResult.value.trim()));
+      //send code to python
     }
   });
 
