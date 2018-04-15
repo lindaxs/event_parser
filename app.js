@@ -15,7 +15,15 @@ Office.initialize = function (reason) {
 function loadItemProps(item) {
   // Get the table body element
   var tbody = $('.prop-table');
-  var text = getBody();
+  var body = item.body;
+  
+  body.getAsync(Office.CoercionType.Text, function (asyncResult) {
+    if (asyncResult.status !== Office.AsyncResultStatus.Succeeded){
+        tbody.append(makeTableRow("XXX: ", "BAD"));
+    } else {
+      tbody.append(makeTableRow("XXX: ", asyncResult.value.trim());
+    }
+  });
 
   // Add a row to the table for each message property
   // tbody.append(makeTableRow("Id", item.itemId));
@@ -25,7 +33,6 @@ function loadItemProps(item) {
   tbody.append(makeTableRow("Date: "));
   tbody.append(makeTableRow("Time: "));
   tbody.append(makeTableRow("Location: "));
-  tbody.append(makeTableRow("XXX: ", text));
   
 }
 
@@ -67,11 +74,5 @@ function getBody(){
   var _item = Office.context.mailbox.item;
   var body = _item.body;
   
-  body.getAsync(Office.CoercionType.Text, function (asyncResult) {
-    if (asyncResult.status !== Office.AsyncResultStatus.Succeeded){
-      //Handle Error
-    } else {
-      return asyncResult.value.trim();
-    }
-  });
+  
 }
