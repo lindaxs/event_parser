@@ -21,7 +21,7 @@ function loadItemProps(item) {
     if (asyncResult.status !== Office.AsyncResultStatus.Succeeded){
         tbody.append(makeTableRow("XXX: ", "BAD"));
     } else {
-      tbody.append(makeTableRow("XXX: ", asyncResult.value.trim());
+      tbody.append(makeTableRow("XXX: ", asyncResult.value.trim()));
     }
   });
 
